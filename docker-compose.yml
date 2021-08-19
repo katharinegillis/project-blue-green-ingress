@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  ingress:
+    image: registry.ops.katiecordescodes.com/nginx
+    restart: always
+    volumes:
+      - .docker/ingress/conf.d:/etc/nginx/conf.d
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${TRAEFIK_NAME}.rule=Host(`${SITE_URL}`)"
+      - "traefik.http.routers.${TRAEFIK_NAME}.entryPoints=web"
+      - "traefik.http.routers.${TRAEFIK_NAME}.service=${TRAEFIK_NAME}"
+      - "traefik.http.services.${TRAEFIK_NAME}.loadbalancer.server.port=8080"
+      - "traefik.http.routers.${TRAEFIK_NAME}-staging.rule=Host(`staging.${SITE_URL}`)"
+      - "traefik.http.routers.${TRAEFIK_NAME}-staging.entryPoints=web"
+      - "traefik.http.routers.${TRAEFIK_NAME}-staging.service=${TRAEFIK_NAME}-staging"
+      - "traefik.http.services.${TRAEFIK_NAME}-staging.loadbalancer.server.port=8080"
+    networks:
+      - traefik
+      - default
+
+networks:
+  default:
+    name: "${TRAEFIK_NAME}-network"
+  traefik:
+    external: true

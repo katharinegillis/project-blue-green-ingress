@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  ingress:
+    labels:
+      - "traefik.http.middlewares.${TRAEFIK_NAME}-redirect-websecure.redirectscheme.scheme=https"
+      - "traefik.http.routers.${TRAEFIK_NAME}.middlewares=${TRAEFIK_NAME}-redirect-websecure"
+      - "traefik.http.routers.${TRAEFIK_NAME}secure.rule=Host(`${SITE_URL}`)"
+      - "traefik.http.routers.${TRAEFIK_NAME}secure.entryPoints=websecure"
+      - "traefik.http.routers.${TRAEFIK_NAME}secure.tls=true"
+      - "traefik.http.routers.${TRAEFIK_NAME}secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.${TRAEFIK_NAME}secure.service=${TRAEFIK_NAME}"
+      - "traefik.http.middlewares.${TRAEFIK_NAME}-staging-redirect-websecure.redirectscheme.scheme=https"
+      - "traefik.http.routers.${TRAEFIK_NAME}-staging.middlewares=${TRAEFIK_NAME}-staging-redirect-websecure"
+      - "traefik.http.routers.${TRAEFIK_NAME}secure-staging.rule=Host(`staging.${SITE_URL}`)"
+      - "traefik.http.routers.${TRAEFIK_NAME}secure-staging.entryPoints=websecure"
+      - "traefik.http.routers.${TRAEFIK_NAME}secure-staging.tls=true"
+      - "traefik.http.routers.${TRAEFIK_NAME}secure-staging.tls.certresolver=myresolver"
+      - "traefik.http.routers.${TRAEFIK_NAME}secure-staging.service=${TRAEFIK_NAME}"

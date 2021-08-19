@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  entrypoint:
+    networks:
+      default:
+      ingress:
+         aliases:
+           - green
+
+networks:
+  default:
+    name: ${TRAEFIK_NAME}-green-network
+  ingress:
+    external: true
+    name: ${TRAEFIK_NAME}-network

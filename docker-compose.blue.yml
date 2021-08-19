@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  entrypoint:
+    networks:
+      default:
+      ingress:
+         aliases:
+           - blue
+
+networks:
+  default:
+    name: ${TRAEFIK_NAME}-blue-network
+  ingress:
+    external: true
+    name: ${TRAEFIK_NAME}-network
