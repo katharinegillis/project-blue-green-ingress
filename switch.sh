@@ -19,7 +19,7 @@ cp .docker/ingress/conf.d/default-staging.conf .docker/ingress/default-staging.c
 sed -i "s|set \$backend .*;|set \$backend $CURRENT:8080;|g" .docker/ingress/conf.d/default-staging.conf
 
 echo "Check ingress configs are correct"
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.prod-ssl.yml exec -T ingress nginx -g 'daemon off; master_process on;' -t
+docker-compose -f docker-compose.yml -f docker-compose.ssl.yml exec -T ingress nginx -g 'daemon off; master_process on;' -t
 rv=$?
 if [ $rv -eq 0 ]; then
     echo "New ingress nginx config is valid"
@@ -32,7 +32,7 @@ else
 fi
 
 echo "Reload ingress configs"
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.prod-ssl.yml exec -T ingress nginx -g 'daemon off; master_process on;' -s reload
+docker-compose -f docker-compose.yml -f docker-compose.ssl.yml exec -T ingress nginx -g 'daemon off; master_process on;' -s reload
 rv=$?
 if [ $rv -eq 0 ]; then
     echo "Ingress reloaded"
