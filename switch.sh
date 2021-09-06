@@ -43,3 +43,9 @@ else
     cp .docker/ingress/default-staging.conf.back .docker/ingress/conf.d/default-staging.conf
     exit 1
 fi
+
+echo "Update environment symlinks"
+rm -rf production
+ln -s "$NEW" production
+rm -rf staging
+ln -s "$CURRENT" staging
