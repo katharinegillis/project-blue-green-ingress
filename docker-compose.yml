@@ -25,7 +25,3 @@ networks:
     name: "${TRAEFIK_NAME}-network"
   traefik:
     external: true
-  blue:
-    name: "${TRAEFIK_NAME}-blue-network"
-  green:
-    name: "${TRAEFIK_NAME}-green-network"
