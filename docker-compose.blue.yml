@@ -10,6 +10,7 @@ services:
 
 networks:
   default:
+    external: true
     name: ${TRAEFIK_NAME}-blue-network
   ingress:
     external: true
